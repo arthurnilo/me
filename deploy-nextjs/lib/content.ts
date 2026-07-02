@@ -208,7 +208,7 @@ export const PILLARS = {
 
 /** Troque pelos seus links reais */
 export const LINKS = {
-  email: "contato@arthurnilo.dev",
+  email: "arthurdetassis@gmail.com",
   github: "https://github.com/arthurnilo",
   linkedin: "https://linkedin.com/in/arthurnilo",
 };
