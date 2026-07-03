@@ -50,8 +50,10 @@ function Shot({
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("pt");
+  const [filmIdx, setFilmIdx] = useState(0);
   const t = COPY[lang];
   const navRef = useRef<HTMLElement>(null);
+
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -162,6 +164,26 @@ export default function Home() {
       });
     };
 
+    // Slider mobile: dots seguem o card visível (IntersectionObserver é
+    // imune aos casos em que o navegador não emite eventos de scroll)
+    const filmTrack = document.querySelector<HTMLElement>(".film-track");
+    const filmSlides = document.querySelectorAll<HTMLElement>(".film-slide");
+    let filmIo: IntersectionObserver | undefined;
+    if (filmTrack && filmSlides.length) {
+      filmIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            setFilmIdx(
+              Array.prototype.indexOf.call(filmSlides, entry.target)
+            );
+          });
+        },
+        { root: filmTrack, threshold: 0.6 }
+      );
+      filmSlides.forEach((s) => filmIo!.observe(s));
+    }
+
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     onScroll();
@@ -170,6 +192,7 @@ export default function Home() {
       io?.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      filmIo?.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -210,14 +233,13 @@ export default function Home() {
       {/* ---------- intro ---------- */}
       <div id="top" data-scene="intro" style={{ height: "220vh", position: "relative" }}>
         <div
+          className="intro-sticky"
           style={{
             position: "sticky",
             top: 0,
-            height: "100vh",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            overflow: "hidden",
           }}
         >
           <div
@@ -225,8 +247,8 @@ export default function Home() {
               position: "absolute",
               top: "-12%",
               right: "-8%",
-              width: "46vw",
-              height: "46vw",
+              width: "max(46vw, 320px)",
+              height: "max(46vw, 320px)",
               borderRadius: "50%",
               background:
                 "radial-gradient(circle, rgba(255,199,166,0.5), transparent 68%)",
@@ -239,8 +261,8 @@ export default function Home() {
               position: "absolute",
               bottom: "-16%",
               left: "-10%",
-              width: "52vw",
-              height: "52vw",
+              width: "max(52vw, 360px)",
+              height: "max(52vw, 360px)",
               borderRadius: "50%",
               background:
                 "radial-gradient(circle, rgba(196,190,255,0.45), transparent 68%)",
@@ -259,21 +281,9 @@ export default function Home() {
               position: "relative",
             }}
           >
-            {/* Logo: coloque seu arquivo em /public/logo.png */}
-            <div
-              style={{
-                width: 92,
-                height: 92,
-                borderRadius: "50%",
-                overflow: "hidden",
-                marginBottom: 40,
-              }}
-            >
-              <Shot src="/logo.png" alt="Logo" label="logo" />
-            </div>
             <h1
               style={{
-                fontSize: "clamp(56px, 9vw, 128px)",
+                fontSize: "clamp(44px, 9vw, 128px)",
                 fontWeight: 600,
                 letterSpacing: "-0.045em",
                 lineHeight: 1,
@@ -289,9 +299,9 @@ export default function Home() {
             </p>
           </div>
           <div
+            className="scroll-hint"
             style={{
               position: "absolute",
-              bottom: 40,
               left: 0,
               right: 0,
               display: "flex",
@@ -326,7 +336,7 @@ export default function Home() {
       </div>
 
       {/* ---------- hero ---------- */}
-      <section style={{ padding: "8vh 40px 14vh" }}>
+      <section style={{ padding: "8vh var(--pad-x) 14vh" }}>
         <div className="container">
           <div
             data-reveal
@@ -356,7 +366,7 @@ export default function Home() {
           </div>
           <h2
             style={{
-              fontSize: "clamp(48px, 7.4vw, 104px)",
+              fontSize: "clamp(36px, 7.4vw, 104px)",
               fontWeight: 600,
               letterSpacing: "-0.04em",
               lineHeight: 1.04,
@@ -388,8 +398,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- filme (cena fixa com scroll) ---------- */}
-      <div data-scene="film" style={{ height: "380vh", position: "relative" }}>
+      {/* ---------- filme (cena fixa com scroll — desktop) ---------- */}
+      <div
+        data-scene="film"
+        className="film-desktop"
+        style={{ height: "380vh", position: "relative" }}
+      >
         <div
           style={{
             position: "sticky",
@@ -498,8 +512,68 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ---------- filme (slide horizontal — mobile) ---------- */}
+      <section className="film-mobile">
+        <div className="film-track">
+          {films.map((f, i) => (
+            <div key={i} className="film-slide">
+              <div className="film-slide-card" style={{ background: f.bg }}>
+                <span
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    letterSpacing: "0.24em",
+                    textTransform: "uppercase",
+                    color: f.dark
+                      ? "rgba(246,245,241,0.4)"
+                      : "rgba(22,22,26,0.45)",
+                    marginBottom: 18,
+                  }}
+                >
+                  {f.n}
+                </span>
+                <div
+                  className="em"
+                  style={{
+                    fontSize: "clamp(44px, 13vw, 64px)",
+                    color: f.dark ? "#F6F5F1" : "#16161A",
+                    lineHeight: 1.05,
+                  }}
+                >
+                  {f.h}
+                </div>
+                <p
+                  style={{
+                    maxWidth: 340,
+                    fontSize: 16,
+                    lineHeight: 1.6,
+                    color: f.dark
+                      ? "rgba(246,245,241,0.62)"
+                      : "rgba(22,22,26,0.62)",
+                    marginTop: 20,
+                  }}
+                >
+                  {f.p}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="film-dots-mobile">
+          {films.map((_, i) => (
+            <span
+              key={i}
+              style={{
+                background:
+                  i === filmIdx ? "#16161A" : "rgba(22,22,26,0.22)",
+              }}
+            />
+          ))}
+        </div>
+      </section>
+
       {/* ---------- projetos ---------- */}
-      <section id="projetos" style={{ padding: "16vh 40px 10vh" }}>
+      <section id="projetos" style={{ padding: "16vh var(--pad-x) 10vh" }}>
         <div className="container" style={{ maxWidth: 1180 }}>
           <div
             data-reveal
@@ -514,7 +588,7 @@ export default function Home() {
           >
             <h2
               style={{
-                fontSize: "clamp(40px, 5.5vw, 72px)",
+                fontSize: "clamp(34px, 5.5vw, 72px)",
                 fontWeight: 600,
                 letterSpacing: "-0.035em",
                 lineHeight: 1.05,
@@ -623,7 +697,7 @@ export default function Home() {
       </section>
 
       {/* ---------- sobre ---------- */}
-      <section id="sobre" style={{ padding: "14vh 40px" }}>
+      <section id="sobre" style={{ padding: "14vh var(--pad-x)" }}>
         <div className="container about-grid">
           <div data-reveal="left" style={{ position: "relative" }}>
             <div
@@ -727,7 +801,7 @@ export default function Home() {
       <section
         id="trajetoria"
         style={{
-          padding: "12vh 40px",
+          padding: "12vh var(--pad-x)",
           background: "var(--surface)",
           borderTop: "1px solid rgba(22,22,26,0.06)",
           borderBottom: "1px solid rgba(22,22,26,0.06)",
@@ -873,7 +947,7 @@ export default function Home() {
       <section
         id="contato"
         style={{
-          padding: "20vh 40px 8vh",
+          padding: "20vh var(--pad-x) 8vh",
           position: "relative",
           overflow: "hidden",
         }}
@@ -899,7 +973,7 @@ export default function Home() {
             data-reveal
             style={{
               marginBottom: 30,
-              fontSize: "clamp(48px, 8vw, 110px)",
+              fontSize: "clamp(38px, 8vw, 110px)",
               fontWeight: 600,
               letterSpacing: "-0.04em",
               lineHeight: 1.02,
@@ -935,19 +1009,14 @@ export default function Home() {
               marginBottom: 120,
             }}
           >
-            <a
-              href={`mailto:${LINKS.email}`}
-              className="btn btn-dark"
-              style={{ fontSize: 16, padding: "18px 36px" }}
-            >
+            <a href={`mailto:${LINKS.email}`} className="btn btn-dark btn-big">
               {LINKS.email}
             </a>
             <a
               href={LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline"
-              style={{ fontSize: 16, padding: "18px 32px" }}
+              className="btn btn-outline btn-big"
             >
               GitHub ↗
             </a>
@@ -955,8 +1024,7 @@ export default function Home() {
               href={LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline"
-              style={{ fontSize: 16, padding: "18px 32px" }}
+              className="btn btn-outline btn-big"
             >
               LinkedIn ↗
             </a>

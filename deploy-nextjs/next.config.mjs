@@ -11,6 +11,8 @@ const nextConfig = {
   output: "export",
   basePath,
   images: { unoptimized: true },
+  // Permite testar o dev server pelo celular na rede local (ex.: http://192.168.x.x:3000)
+  allowedDevOrigins: ["192.168.*.*", "10.*.*.*", "localhost"],
 };
 
 export default nextConfig;

@@ -6,6 +6,7 @@
   --faint: #a6a6ac;
   --accent: #3b4fe4;
   --line: rgba(22, 22, 26, 0.09);
+  --pad-x: clamp(20px, 5vw, 40px);
 }
 
 * {
@@ -14,6 +15,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -23,6 +26,11 @@ body {
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
+}
+
+img {
+  max-width: 100%;
 }
 
 ::selection {
@@ -149,6 +157,11 @@ p {
   transform: translateY(-3px);
 }
 
+.btn-big {
+  font-size: 16px;
+  padding: 18px 36px;
+}
+
 /* ---------- cards & chips ---------- */
 
 .card {
@@ -221,20 +234,20 @@ p {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 32px;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 90px;
   align-items: center;
 }
 
 .journey-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 80px;
   align-items: start;
 }
@@ -243,7 +256,7 @@ p {
   .projects-grid,
   .about-grid,
   .journey-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 40px;
   }
 
@@ -251,8 +264,103 @@ p {
     padding: 14px 20px;
   }
 
+  .nav-links {
+    gap: 14px;
+  }
+
   .nav-link {
     display: none;
+  }
+}
+
+/* ---------- filme: slide horizontal (mobile) ---------- */
+
+.film-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .film-desktop {
+    display: none;
+  }
+
+  .film-mobile {
+    display: block;
+    padding: 10vh 0 6vh;
+  }
+
+  .film-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .film-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .film-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    padding: 0 var(--pad-x);
+  }
+
+  .film-slide-card {
+    height: min(520px, 68vh);
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 24px;
+    box-shadow: 0 24px 60px rgba(22, 22, 26, 0.18);
+  }
+
+  .film-dots-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .film-dots-mobile span {
+    width: 26px;
+    height: 4px;
+    border-radius: 2px;
+    transition: background 0.3s ease;
+  }
+
+  .btn-big {
+    font-size: 15px;
+    padding: 15px 24px;
+  }
+
+  .card {
+    border-radius: 22px;
+  }
+
+  .pill-dark {
+    font-size: 13px;
+    padding: 9px 18px;
+  }
+}
+
+/* ---------- intro ---------- */
+
+.intro-sticky {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.scroll-hint {
+  bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .scroll-hint {
+    bottom: 68px;
   }
 }
 
