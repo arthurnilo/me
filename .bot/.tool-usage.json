@@ -1,0 +1,11 @@
+{
+  "reads": {},
+  "searches": {},
+  "writes": {
+    "c:\\Users\\arthur.nilo\\Desktop\\me\\me\\deploy-nextjs\\.gitignore": 1
+  },
+  "total_calls": 7,
+  "repeated_signals": [],
+  "bytes_read": 0,
+  "large_reads": []
+}
