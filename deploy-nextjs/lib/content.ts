@@ -135,7 +135,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "proj-pricing",
-    tag: { pt: "Precificador de Receitas", en: "Recipe Pricer" },
+    tag: { pt: "Full-stack", en: "Full-stack" },
     title: { pt: "Precificador de Receita", en: "Recipe Pricer" },
     desc: {
       pt: "Sistema de controle e precificação de receitas, com exportação de orçamento e controle de ingredientes.",
