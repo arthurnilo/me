@@ -273,6 +273,22 @@ p {
   }
 }
 
+/* ---------- filme: snap na cena fixa (desktop) ---------- */
+
+.film-snap {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 769px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+}
+
 /* ---------- filme: slide horizontal (mobile) ---------- */
 
 .film-mobile {
@@ -315,7 +331,6 @@ p {
     justify-content: center;
     text-align: center;
     padding: 32px 24px;
-    box-shadow: 0 24px 60px rgba(22, 22, 26, 0.18);
   }
 
   .film-dots-mobile {

@@ -102,9 +102,10 @@ export default function Home() {
     const frames = document.querySelectorAll<HTMLElement>("[data-film-frame]");
     const dots = document.querySelectorAll<HTMLElement>("[data-film-dot]");
 
-    const sceneProgress = (wrap: HTMLElement) => {
+    // holdPx: trecho final de scroll em que a cena fica "segurada" em p = 1
+    const sceneProgress = (wrap: HTMLElement, holdPx = 0) => {
       const r = wrap.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
+      const total = r.height - window.innerHeight - holdPx;
       return total > 0 ? clamp01(-r.top / total) : 0;
     };
 
@@ -130,7 +131,7 @@ export default function Home() {
         }
 
         if (filmWrap && filmCard && frames.length) {
-          const p = sceneProgress(filmWrap);
+          const p = sceneProgress(filmWrap, 100);
           if (!reduce) {
             const entry = clamp01(p * 3.2);
             filmCard.style.transform = `scale(${0.9 + entry * 0.1})`;
@@ -402,8 +403,17 @@ export default function Home() {
       <div
         data-scene="film"
         className="film-desktop"
-        style={{ height: "380vh", position: "relative" }}
+        style={{ height: "calc(380vh + 100px)", position: "relative" }}
       >
+        {/* pontos de snap: um no centro de cada card da cena */}
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            aria-hidden
+            className="film-snap"
+            style={{ top: `${((i + 0.5) * 280) / 3}vh` }}
+          />
+        ))}
         <div
           style={{
             position: "sticky",
