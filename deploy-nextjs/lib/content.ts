@@ -134,14 +134,14 @@ export const PROJECTS: Project[] = [
     stack: ["React", "Node.js", "PostgreSQL"],
   },
   {
-    slug: "proj-bela",
-    tag: { pt: "IA on-premise", en: "On-prem AI" },
-    title: { pt: "Bela — IA para Jurídico", en: "Bela — Legal AI" },
+    slug: "proj-pricing",
+    tag: { pt: "Precificador de Receitas", en: "Recipe Pricer" },
+    title: { pt: "Precificador de Receita", en: "Recipe Pricer" },
     desc: {
-      pt: "Sistema RAG on-premise que responde com base em documentos internos, sempre citando as fontes.",
-      en: "On-premise RAG system that answers from internal documents, always citing its sources.",
+      pt: "Sistema de controle e precificação de receitas, com exportação de orçamento e controle de ingredientes.",
+      en: "Recipe control and pricing system, featuring budget export and ingredient tracking.",
     },
-    stack: ["Python", "Llama 3.1", "Qdrant"],
+    stack: ["React", "Node.js", "SQL"],
   },
   {
     slug: "proj-fin",
