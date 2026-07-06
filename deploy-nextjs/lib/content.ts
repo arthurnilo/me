@@ -168,7 +168,7 @@ export const PROJECTS: Project[] = [
     tag: { pt: "Em produção", en: "Live" },
     title: { pt: "brunnotosenutricionista", en: "brunnotosenutricionista" },
     desc: {
-      pt: "Plataforma para personal trainer — apresentação de serviços, interface responsiva, no ar.",
+      pt: "Plataforma para nutricionista — apresentação de serviços, interface responsiva, no ar.",
       en: "Platform for a personal trainer — service showcase, responsive interface, live in production.",
     },
     stack: ["Next.js", "Tailwind", "Vercel"],
