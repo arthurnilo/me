@@ -212,3 +212,39 @@ export const LINKS = {
   github: "https://github.com/arthurnilo",
   linkedin: "https://linkedin.com/in/arthurnilo",
 };
+
+/** Copy da página /links (link-in-bio) */
+export const LINKHUB = {
+  pt: {
+    backToSite: "voltar ao site",
+    featuredLabel: "portfólio — 2026",
+    featuredH1: "todo o meu",
+    featuredHEm: "trabalho",
+    featuredSub:
+      "Projetos em produção, trajetória e o que eu faço de melhor — em um só lugar.",
+    featuredCta: "explorar o site",
+    sectionLabel: "conexões",
+    githubDesc: "código, experimentos & projetos abertos",
+    linkedinDesc: "trajetória profissional & rede",
+    emailDesc: "para propostas e boas conversas",
+    copy: "copiar",
+    copied: "copiado ✓",
+    localLabel: "Vila Velha — Brasil",
+  },
+  en: {
+    backToSite: "back to site",
+    featuredLabel: "portfolio — 2026",
+    featuredH1: "all of my",
+    featuredHEm: "work",
+    featuredSub:
+      "Production projects, my journey and what I do best — all in one place.",
+    featuredCta: "explore the site",
+    sectionLabel: "connections",
+    githubDesc: "code, experiments & open projects",
+    linkedinDesc: "professional journey & network",
+    emailDesc: "for proposals and good conversations",
+    copy: "copy",
+    copied: "copied ✓",
+    localLabel: "Vila Velha — Brazil",
+  },
+} as const;
