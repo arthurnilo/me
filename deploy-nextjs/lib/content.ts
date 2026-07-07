@@ -158,8 +158,8 @@ export const PROJECTS: Project[] = [
     tag: { pt: "Full-stack", en: "Full-stack" },
     title: { pt: "Gestão de Estoque", en: "Inventory System" },
     desc: {
-      pt: "Controle de estoque com relatórios gerenciais e perfis de acesso. Arquitetura modular, 100% TypeScript.",
-      en: "Inventory control with management reports and access roles. Modular architecture, 100% TypeScript.",
+      pt: "Controle de estoque com relatórios gerenciais e perfis de acesso. Arquitetura modular, React & TypeScript.",
+      en: "Inventory control with management reports and access roles. Modular architecture, React & TypeScript.",
     },
     stack: ["TypeScript", "TanStack Query"],
   },
@@ -174,6 +174,26 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js", "Tailwind", "Vercel"],
     link: "https://brunnotosenutricionista.com.br",
   },
+  {
+  slug: "proj-saude",
+  tag: { pt: "Em desenvolvimento...", en: "Developing..." },
+  title: { pt: "HealthCare", en: "HealthCare" },
+  desc: {
+    pt: "Plataforma para profissionais da saúde — acompanhamento, anamneses, comparação de evolução e muito mais.",
+    en: "Platform for healthcare professionals — monitoring, patient histories, progress comparison, and much more.",
+  },
+  stack: ["Next.js", "Tailwind", "Vercel"],
+  },
+  {
+  slug: "proj-cheeros",
+  tag: { pt: "Em desenvolvimento...", en: "Developing..." },
+  title: { pt: "Gestão de Ginásio de Cheer", en: "Cheerleading Gym Management" },
+  desc: {
+    pt: "Plataforma para Donos e treinadores de Cheerleading — gestão de atletas, financeiro, rotinas e etc.",
+    en: "Platform for cheerleading gym owners and coaches — athlete management, finances, routines, etc..",
+  },
+  stack: ["React", "TypeScript", "Node.js"],
+  },  
 ];
 
 export const EDU = [
